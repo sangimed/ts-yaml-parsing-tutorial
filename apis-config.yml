@@ -1,0 +1,13 @@
+apis:
+  - name: API_1
+    url: "api1.example.com"
+    proxies:
+      - "proxy-a.com"
+      - "proxy-b.com"
+  
+  - name: API_2
+    url: "api2.example.com"
+    proxies:
+      - "proxy-c.com"
+      - "proxy-d.com"
+      - "proxy-e.com"
