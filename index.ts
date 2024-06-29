@@ -7,7 +7,6 @@ const port = process.env.PORT || 3000;
 
 // Basic route
 app.get("/", async (req, res) => {
-  res.send("Hello World!");
 
   let apisConfigContent: string;
   try {
@@ -15,10 +14,36 @@ app.get("/", async (req, res) => {
       encoding: "utf8",
     });
 
-    const config = yamlParse(apisConfigContent) as SquareBalanceConfig;
-  } catch (error) {
-    console.error(`Error while parsing the YML file`);
-    return;
+    const config = yamlParse(apisConfigContent) as APIsConfig;
+    res.send(`${JSON.stringify(config, null, 2)}`);
+    // outputs : 
+    // {
+    //   "apis": [
+    //     {
+    //       "name": "API_1",
+    //       "url": "api1.example.com",
+    //       "proxies": [
+    //         "proxy-a.com",
+    //         "proxy-b.com"
+    //       ]
+    //     },
+    //     {
+    //       "name": "API_2",
+    //       "url": "api2.example.com",
+    //       "proxies": [
+    //         "proxy-c.com",
+    //         "proxy-d.com",
+    //         "proxy-e.com"
+    //       ]
+    //     }
+    //   ]
+    // }
+  } catch (error: any) {
+    console.error(`An error occurred: ${error.message}`);
+    res.status(500).send({
+      message: 'Internal Server Error',
+      error: error.message
+    });
   }
 });
 
